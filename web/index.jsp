@@ -13,5 +13,6 @@
     </head>
     <body>
         <h1>Accueil + index</h1>
+        <p>aller à la <a href="page01.jsp"> vers page 01</a></p>
     </body>
 </html>

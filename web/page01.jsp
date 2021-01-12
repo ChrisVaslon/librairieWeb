@@ -11,6 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="css/style01.css" rel="stylesheet" type="text/css"/>
         <title>page01</title>
     </head>
     <body>
@@ -21,6 +22,9 @@
         String nowStr = sdf.format(now);
         %>
         <p>Bienvenue, nous sommes le <%= nowStr %></p>
+        <img  src="images/téléchargement.jfif"/>
         
+        
+         <p>aller à la <a href="index.jsp"> index</a></p>
     </body>
 </html>
