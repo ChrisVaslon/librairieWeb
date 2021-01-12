@@ -4,15 +4,6 @@
     Author     : chris
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>index</title>
-    </head>
-    <body>
-        <h1>Accueil + index</h1>
-        <p>aller à la <a href="page01.jsp"> vers page 01</a></p>
-    </body>
-</html>
+<%@page contentType="text/html" pageEncoding="UTF-8"%> 
+<%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
+<c:import url="/Home"/>
