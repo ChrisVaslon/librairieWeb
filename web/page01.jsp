@@ -23,5 +23,8 @@
         %>
         <p>Bienvenue, nous sommes le <%= nowStr %></p>
         <img  src="images/téléchargement.jfif"/>
+        
+        
+         <p>aller à la <a href="index.jsp"> index</a></p>
     </body>
 </html>
