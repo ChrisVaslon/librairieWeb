@@ -23,7 +23,7 @@ import traitements.GestionClient;
  *
  * @author Win 7
  */
-@WebServlet(name = "InscriptionServlet", urlPatterns = {"/Inscription"})
+@WebServlet(name = "InscriptionServlet", urlPatterns = {"/inscription"})
 public class InscriptionServlet extends HttpServlet {
 
     /**
