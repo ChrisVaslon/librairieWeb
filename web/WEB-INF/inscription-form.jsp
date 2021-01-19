@@ -26,7 +26,7 @@
                 <p class ="erreur">${requestScope.msg}</p>              
             </c:if>
 
-            <form action="Inscription" method="POST">
+            <form action="inscription" method="POST">
 
                 <div class="form-group">
                     <label for="id_nom">Nom :</label>
