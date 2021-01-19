@@ -7,6 +7,8 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -41,9 +43,13 @@ public class InscriptionServlet extends HttpServlet {
 
         //todo algo
         String email = request.getParameter("email");
+        email = email.trim();
         String nom = request.getParameter("nom");
+        nom = nom.trim();
         String prenom = request.getParameter("prenom");
+        prenom = prenom.trim();
         String pwd = request.getParameter("pwd");
+
         String pwd2 = request.getParameter("pwd2");
         
         //maladroit
@@ -51,12 +57,27 @@ public class InscriptionServlet extends HttpServlet {
         
         try {
             gtClient.creerNouveauClient(nom, prenom, email, pwd, pwd2);
+            request.setAttribute("msgSuccess", "Inscription reussi");
+            
         } catch (CustomedException ex) {
+            //message erreur
+            HashMap<String, String> erreurs = ex.getErreurs();
             String message = ex.getMessage();
             System.out.println(message);
             request.setAttribute("msg", message);
+            //maladroit
+             request.setAttribute("errPwd", erreurs.get("errPwd"));
+              request.setAttribute("errMail", erreurs.get("errMail"));
+              
+            //recup de la saisie user
+            request.setAttribute("nom", nom);
+              request.setAttribute("prenom", prenom);
+                request.setAttribute("email", email);
+            
             urlJSP = "/WEB-INF/inscription-form.jsp";
             
+        } catch (SQLException ex){
+               System.out.println(">>>>>>>>> erreur debug 01 : " + ex.getMessage());
         }
         
         System.out.println(">>>>>>>>>>>> URL JSP :" + urlJSP);

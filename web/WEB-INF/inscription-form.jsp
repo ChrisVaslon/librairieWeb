@@ -13,47 +13,62 @@
         <title>inscription</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="style01.css" rel="stylesheet" type="text/css"/>
+        <link href="css/style01.css" rel="stylesheet" type="text/css"/>
     </head>
-    
+
     <body>
         <c:import url="WEB-INF/menus/menus-main.jsp" />
 
         <div class="container mt-4">
             <h1>Formulaire d'inscription</h1>
-                
+
             <c:if test="${not empty requestScope.msg}">
                 <p class ="erreur">${requestScope.msg}</p>              
             </c:if>
-            
+
             <form action="Inscription" method="POST">
 
                 <div class="form-group">
                     <label for="id_nom">Nom :</label>
-                    <input type="text" name="nom" class="form-control" placeholder="Votre nom" id="id_nom">
+                    <input type="text" name="nom" value='<c:out value ="${requestScope.Nom}"/>' class="form-control" placeholder="Votre nom" id="id_nom">
+                
+             
+                
                 </div>
 
                 <div class="form-group">
                     <label for="id_prenom">Prenom :</label>
-                    <input type="text" name="prenom" class="form-control" placeholder="Votre prenom" id="id_nom">
+                    <input type="text" value = "${requestScope.prenom}" value='<c:out value ="${requestScope.prenom}"/>' name="prenom" class="form-control" placeholder="Votre prenom" id="id_nom">
                 </div>
 
 
                 <div class="form-group">
                     <label for="pwd">Password:</label>
                     <input type="password" name = "pwd" class="form-control" placeholder="Enter password" id="pwd">
+                  
+                    <c:if test="${not empty requestScope.errPwd}">
+                        <p class ="erreur">${requestScope.errPwd}</p>              
+                    </c:if>
+
                 </div>
 
                 <div class="form-group">
                     <label for="pwd2">Confirmer le mdp : </label>
                     <input type="password" name = "pwd2" class="form-control" placeholder="Enter password" id="pwd2">
+                   
                 </div>
 
 
                 <div class="form-group">
                     <label for="email">Email:</label>
-                    <input type="email" name = "email" class="form-control" placeholder="Enter mail" id="email">
+                    <input type="email" name = "email" value='<c:out value ="${requestScope.email}"/>' class="form-control" placeholder="Enter mail" id="email">
+                
+                   <c:if test="${not empty requestScope.errMail}">
+                        <p class ="erreur">${requestScope.errMail}</p>              
+                    </c:if>
+                
                 </div>
+                
 
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
