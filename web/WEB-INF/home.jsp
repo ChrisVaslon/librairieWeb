@@ -18,10 +18,18 @@
     <body>
 
         <c:import url="WEB-INF/menus/menus-main.jsp" />
+        <c:if test ="${not empty requestScope.msgSuccess}">
+
+            <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">&times;</button>
+                <strong>Félicitation!</strong> ${requestScope.msgSuccess}
+            </div>
+
+        </c:if>
 
         <h1>Home</h1>
         <p> Bienvenue sur la page home </p>
-        <p> Acceder au <a href="vers-inscription">formulaire</a> </p>
+
 
 
 
