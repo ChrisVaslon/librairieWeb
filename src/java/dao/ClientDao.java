@@ -54,5 +54,4 @@ public class ClientDao {
             return qte;
         }
     }
-    
 }
