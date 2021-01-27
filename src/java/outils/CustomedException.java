@@ -31,6 +31,8 @@ public class CustomedException extends Exception{
     public void setErreurs(HashMap<String, String> erreurs) {
         this.erreurs = erreurs;
     }
+
+
     
     
     

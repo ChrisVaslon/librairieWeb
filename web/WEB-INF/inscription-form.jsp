@@ -17,7 +17,7 @@
     </head>
 
     <body>
-        <c:import url="WEB-INF/menus/menus-main.jsp" />
+        <c:import url="/menu-main" />
 
         <div class="container mt-4">
             <h1>Formulaire d'inscription</h1>

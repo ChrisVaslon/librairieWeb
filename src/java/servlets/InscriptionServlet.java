@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import outils.CustomedException;
 import traitements.GestionClient;
 
@@ -39,6 +40,8 @@ public class InscriptionServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
+        HttpSession session = request.getSession();
+        
         String urlJSP = "/WEB-INF/home.jsp";
 
         //todo algo
@@ -51,14 +54,15 @@ public class InscriptionServlet extends HttpServlet {
         String pwd = request.getParameter("pwd");
 
         String pwd2 = request.getParameter("pwd2");
-        
-        //maladroit
-        GestionClient gtClient = new GestionClient();
-        
+
+        if (getServletContext().getAttribute("gestionClient") == null) {
+            getServletContext().setAttribute("gestionClient", new GestionClient()); // " new GestionClient()" => GestionClient GC = new GestionClient()"
+        }
+        GestionClient gtClient = (GestionClient) getServletContext().getAttribute("gestionClient");
         try {
             gtClient.creerNouveauClient(nom, prenom, email, pwd, pwd2);
             request.setAttribute("msgSuccess", "Inscription reussi");
-            
+
         } catch (CustomedException ex) {
             //message erreur
             HashMap<String, String> erreurs = ex.getErreurs();
@@ -66,20 +70,20 @@ public class InscriptionServlet extends HttpServlet {
             System.out.println(message);
             request.setAttribute("msg", message);
             //maladroit
-             request.setAttribute("errPwd", erreurs.get("errPwd"));
-              request.setAttribute("errMail", erreurs.get("errMail"));
-              
+            request.setAttribute("errPwd", erreurs.get("errPwd"));
+            request.setAttribute("errMail", erreurs.get("errMail"));
+
             //recup de la saisie user
             request.setAttribute("nom", nom);
-              request.setAttribute("prenom", prenom);
-                request.setAttribute("email", email);
-            
+            request.setAttribute("prenom", prenom);
+            request.setAttribute("email", email);
+
             urlJSP = "/WEB-INF/inscription-form.jsp";
-            
-        } catch (SQLException ex){
-               System.out.println(">>>>>>>>> erreur debug 01 : " + ex.getMessage());
+
+        } catch (SQLException ex) {
+            System.out.println(">>>>>>>>> erreur debug 01 : " + ex.getMessage());
         }
-        
+
         System.out.println(">>>>>>>>>>>> URL JSP :" + urlJSP);
         getServletContext().getRequestDispatcher(urlJSP).include(request, response);
     }

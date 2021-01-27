@@ -17,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import traitements.GestionLivre;
 
 @WebServlet(name = "LivreServlet", urlPatterns = {"/livre"})
@@ -36,12 +37,18 @@ public class LivreServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
+        HttpSession session = request.getSession();
+        
         String urlJSP = "/WEB-INF/detail-livre.jsp";
         String eanParametre = request.getParameter("ean");
         request.setAttribute("eanReceived", eanParametre);
         
-        //maladroit
-        GestionLivre gestionLivre = new GestionLivre();
+         if (getServletContext().getAttribute("gestionLivre") == null) {
+            getServletContext().setAttribute("gestionLivre", new GestionLivre());
+        }
+
+        GestionLivre gestionLivre = (GestionLivre) getServletContext().getAttribute("gestionLivre");
+        
         try {
             Livre livre = gestionLivre.selectUnLivreAvecEan(eanParametre);
             request.setAttribute("livre", livre);

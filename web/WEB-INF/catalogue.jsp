@@ -17,7 +17,7 @@
         <link href="css/style01.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <c:import url="WEB-INF/menus/menus-main.jsp" />
+        <c:import url="/menu-main" />
         <div class="container-fluid mt-4">
             <h1>Notre catalogue</h1>
             <div class="card-deck justify-content-center mt-5">
@@ -26,11 +26,13 @@
                    <a href ='livre?ean=<c:out value="${livre.ean}" />'> <img style ="width: 300px;" class="card-img-top" src ='images/<c:out value="${livre.image}" /> ' alt="couvertureDeLivre"></a> 
                     <div class="card-body text-center">
                         
-                        <h1 class = "h3" <a href="livre?ean=<c:out value="${livre.ean}" />' </a>> <c:out value="${livre.titre}" /></h1>
+                        <h1 class = "h3" <a href='livre?ean=<c:out value="${livre.ean}" />' </a>> <c:out value="${livre.titre}" /></h1>
                                             
                                             
                         <p class="card-text">prix HT : <fmt:formatNumber value="${livre.prixHT}" minFractionDigits="2" maxFractionDigits="2" currencySymbol="$"/> euros </p>
                        
+                        <a href='panier?operation=ajouter&ean=<c:out value="${livre.ean}" />'>Ajouter au panier</a>
+                        
                     </div>
                 </div>
                 </c:forEach>
