@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
+
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
     <!-- Brand -->
     <a class="navbar-brand" href="home">
@@ -25,14 +27,24 @@
                 <a class="nav-link" href="catalogue">Catalogue</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Panier</a>
+                <a class="nav-link" href="detail-panier">Panier : ${requestScope.qte}</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="vers-inscription">Inscription</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Se connecter </a>
-            </li>
+
+            <c:if test="${empty sessionScope.user}" >
+                <li class="nav-item">
+                    <a class="nav-link" href="vers-inscription">Inscription</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="vers-login">Se connecter </a>
+                </li>
+            </c:if>
+
+            <c:if test="${not empty sessionScope.user}" >
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Se deconnecter</a>
+                </li>
+            </c:if>
+
         </ul>
     </div>
 </nav>

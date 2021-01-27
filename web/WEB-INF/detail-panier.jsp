@@ -1,6 +1,6 @@
 <%-- 
     Document   : home
-    Created on : 12 janv. 2021, 10:17:19
+    Created on : 21 janv. 2021, 10:17:19
     Author     : chris
 --%>
 
@@ -16,19 +16,33 @@
 
     </head>
     <body>
-
-        <c:import url="/menu-main" />
-        <c:if test ="${not empty requestScope.msgSuccess}">
-
-            <div class="alert alert-success alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-label="close">&times;</button>
-                <strong>Félicitation!</strong> ${requestScope.msgSuccess}
-            </div>
-
-        </c:if>
-
-        <h1>Home</h1>
-        <p> Bienvenue sur la page home </p>
+        
+<c:import url="/menu-main" />
+        <div class="container mt-4">
+            <h1>VotrePanier</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>EAN</th>
+                        <th>titre</th>
+                        <th>prix TTC / unité</th>
+                        <th>qte</th>
+                    </tr>
+                </thead>
+                
+                
+                <tbody>
+                    <c:forEach items="${requestScope.lignes}" var="ligne">
+                        <tr>
+                            <td><c:out value ="${ligne.livre.ean}" /></td>
+                            <td><c:out value ="${ligne.livre.titre}" /></td>
+                            <td><c:out value ="${ligne.livre.prixHT}" /></td>
+                            <td><c:out value ="${ligne.qte}" /></td>
+                        </tr>
+                         </c:forEach>
+                </tbody>
+            </table>
+        </div>
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>

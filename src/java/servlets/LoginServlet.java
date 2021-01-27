@@ -5,11 +5,11 @@
  */
 package servlets;
 
-import entites.Livre;
+import entites.Client;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -18,14 +18,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import traitements.GestionLivre;
+import outils.CustomedException;
+import traitements.GestionClient;
 
 /**
  *
  * @author Win 7
  */
-@WebServlet(name = "afficherCatalogueServlet", urlPatterns = {"/catalogue"})
-public class afficherCatalogueServlet extends HttpServlet {
+@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
+public class LoginServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,30 +39,40 @@ public class afficherCatalogueServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        response.setContentType("text/html;charset=UTF-8");
+         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        HttpSession session = request.getSession(); // on utilise "request" car l'objet est échangé dans chaque session
+        HttpSession session = request.getSession();
         
-        String urlJSP = "/WEB-INF/catalogue.jsp";
-
-        //TO DO ALGO
-        if (getServletContext().getAttribute("gestionLivre") == null) {
-            getServletContext().setAttribute("gestionLivre", new GestionLivre());
+          String urlJSP = "/WEB-INF/home.jsp";
+        
+          String email = request.getParameter("email");
+          String password = request.getParameter("password");
+          
+        if (getServletContext().getAttribute("gestionClient") == null) {
+        getServletContext().setAttribute("gestionClient", new GestionClient()); // " new GestionClient()" => GestionClient GC = new GestionClient()"
         }
-
-        GestionLivre gestionLivre = (GestionLivre) getServletContext().getAttribute("gestionLivre");
+        GestionClient gtClient = (GestionClient) getServletContext().getAttribute("gestionClient");
         
         try {
-
-            request.setAttribute("catalogue", gestionLivre.selectAllLivres());
+            Client user = gtClient.seConnecter(email, password);
+            System.out.println(user);
+            session.setAttribute("user", user);
+            request.setAttribute("msgSuccess", "Bravo, vous êtes connecté " + user.getNom() + " !");
+        } catch (CustomedException ex) {
+           request.setAttribute("errLogin", ex.getMessage());
+           HashMap<String, String> erreurs = ex.getErreurs();
+           request.setAttribute("errMail", erreurs.get("errMail"));
+           
+           request.setAttribute("errPassword", erreurs.get("errPassword"));
+           
+           request.setAttribute("emailFourni", email);
+           urlJSP = "/WEB-INF/login-form.jsp";
+           
         } catch (SQLException ex) {
-            // to do
-            System.out.println("erreur catalogue" + ex.getMessage());
+           System.out.println("erreur 02 sql :" + ex.getMessage());
         }
-
-        getServletContext().getRequestDispatcher(urlJSP).include(request, response);
-
+      getServletContext().getRequestDispatcher(urlJSP).include(request, response);
+     
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
